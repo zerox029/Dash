@@ -1,6 +1,6 @@
 const Commando = require("discord.js-commando");
 
-class DiceRollCommand extends Commando.Command
+module.exports = class DiceRollCommand extends Commando.Command
 {
     constructor(client)
     {
@@ -18,5 +18,3 @@ class DiceRollCommand extends Commando.Command
         message.reply("You rolled a " + roll);
     }
 }
-
-module.exports = DiceRollCommand;

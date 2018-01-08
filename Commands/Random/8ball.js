@@ -1,14 +1,24 @@
 const Commando = require("discord.js-commando");
 
-class EightBallCommand extends Commando.Command
+module.exports = class EightBallCommand extends Commando.Command
 {
     constructor(client)
     {
         super(client, {
             name: "8ball",
+            aliases: ['eight', 'ball'],
             group: 'random',
             memberName: "8ball",
-            description: "Decides your fate"
+            description: "Decides your fate",
+            examples: ["-8ball Will I become rich soon?"],
+            args: [
+                {
+                    key: 'question',
+                    prompt: 'What question would you like answered?\n',
+                    type: 'string',
+                    default: ''
+                },
+            ]
         });
     }
 
@@ -41,7 +51,7 @@ class EightBallCommand extends Commando.Command
         //If a question has been asked, answer it
         if(args != "")
         {
-            var roll = Math.floor(Math.random() * answers.length) + 1;
+            var roll = Math.floor(Math.random() * answers.length);
             message.reply(" **asked**: " + args + "\n **Answer**: " + answers[roll]);
         }
         //Otherwise, require a question
@@ -51,8 +61,6 @@ class EightBallCommand extends Commando.Command
         }
 
         //Delete the question message
-        message.delete(0);
+        message.delete();
     }
 }
-
-module.exports = EightBallCommand;

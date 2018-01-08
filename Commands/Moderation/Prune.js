@@ -1,27 +1,49 @@
 const Commando = require("discord.js-commando");
 
-class PruneCommand extends Commando.Command
+module.exports = class PruneCommand extends Commando.Command
 {
     constructor(client)
     {
         super(client, {
             name: "prune",
-            group: 'mod',
+            aliases: ['p'],
+            group: "mod",
             memberName: "prune",
-            description: "Prunes the amount of messages specified"
+            description: "Prunes the amount of messages specified",
+            examples: ["-prune 10"],
+            clientPermissions: ['MANAGE_MESSAGES'],
+            args: [
+                {
+                    key: 'amount',
+                    prompt: 'The amount of messages you want deleted?\n',
+                    min: 1,
+                    type: 'integer',
+                    default: ''
+                }
+            ]
         });
     }
+
+	hasPermission (msg) {
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
+	}
 
     async run(message, args)
     {
         //If the argument is a number
-        if(!isNaN(args))
+        if(!isNaN(args.amount))
         {
             //If the argument is bigger than 0, remove n messages
-            if(args > 0)
-            {
-                
-                message.reply("Removed " + args);
+            if(args.amount > 0)
+            {   
+                message.channel.bulkDelete(args.amount + 1, true);
+
+                const reply = await msg.say(`\`Deleted ${args.amount} messages\``);
+
+                return reply.delete({
+                    'timeout': 1000,
+                    'reason': 'Deleting own return message after purge'
+                });
             }
             //Otherwise complain
             else
@@ -36,5 +58,3 @@ class PruneCommand extends Commando.Command
         }
     }
 }
-
-module.exports = PruneCommand;

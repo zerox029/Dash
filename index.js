@@ -2,7 +2,7 @@ const Commando = require("discord.js-commando");
 const sqlite = require("sqlite");
 const path = require('path');
 
-const bot = new Commando.Client();
+const bot = new Commando.Client({unknownCommandResponse: false});
 
 bot.setProvider(
     sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
