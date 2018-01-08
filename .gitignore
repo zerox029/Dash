@@ -1,5 +1,5 @@
 # File containing private API keys and tokens
-const.json
+*.env
 
 settings.sqlite3
 

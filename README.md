@@ -14,7 +14,7 @@ This is still heavily under development and is not intended for end-user use. Th
 - Clone the repository(`git clone https://github.com/zerox029/Dash.git`)
 - Download the necessary node packages(`npm install`)
 - Get yourself a working [working bot account](https://discordapp.com/developers/applications/me#top) and link it to this repository
-- Put all you're API keys and discord tokens in a const.json file in the root directory
+- Put all you're API keys and discord tokens in a .env file in the root directory
 - Create a test discord server in which you can debug and test Dash
 - Build in your Code Editor of choice
 

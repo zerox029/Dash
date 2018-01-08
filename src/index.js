@@ -1,6 +1,7 @@
 const Commando = require("discord.js-commando");
 const sqlite = require("sqlite");
 const path = require('path');
+require('dotenv').config();
 
 const bot = new Commando.Client({unknownCommandResponse: false});
 
@@ -17,6 +18,4 @@ bot.registry
     .registerDefaults()
     .registerCommandsIn(__dirname +  "/Commands");
 
-//TODO: Link to const.json
-bot.login('Mzk5NzA1ODAxNzE3MTg2NTcx.DTQ-jA.uZmTRGMqqxtq0tdgaE6ivXJpDJQ');
-console.log(bot.commandPrefix);
+bot.login(process.env.DISCORD_TOKEN);
