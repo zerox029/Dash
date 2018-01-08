@@ -1,6 +1,6 @@
 # Dash
 
-One Paragraph of project description goes here
+A multi-purpose discord bot written in JavaScript with node.js
 
 ## Getting Started
 
@@ -72,7 +72,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Étienne PLante** - *Initial work* - [Zerox029](https://github.com/zerox029)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
