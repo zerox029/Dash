@@ -24,4 +24,4 @@ Note that while we already have certain standards in place, nothing is set in st
 
 # Licence
 
-The osu! client code and framework are licensed under the [GNU licence](https://opensource.org/licenses/GNU). Please see [the licence file](LICENCE.md) for more information. [tl;dr](https://tldrlegal.com/license/gnu-license) you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source.
+The osu! client code and framework are licensed under the [GNU licence](https://opensource.org/licenses/GNU). Please see [the licence file](LICENCE) for more information. [tl;dr](https://tldrlegal.com/license/gnu-license) you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source.
