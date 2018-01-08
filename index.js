@@ -11,7 +11,8 @@ bot.setProvider(
 bot.registry
     .registerGroups([
         ['random', 'Random'],
-        ['fun', 'Fun']
+        ['fun', 'Fun'],
+        ['mod', 'Moderation']
     ])
     .registerDefaults()
     .registerCommandsIn(__dirname +  "/Commands");
