@@ -1,6 +1,8 @@
 # File containing private API keys and tokens
 const.json
 
+settings.sqlite3
+
 # Logs
 logs
 *.log
