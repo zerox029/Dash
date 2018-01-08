@@ -1,0 +1,16 @@
+{
+  "name": "dash",
+  "version": "0.0.1",
+  "description": "A multi-purpose discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Étienne Plante",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.2.1",
+    "discord.js-commando": "^0.9.0",
+    "nodesu": "^0.6.3"
+  }
+}
