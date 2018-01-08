@@ -24,7 +24,6 @@ module.exports = class EightBallCommand extends Commando.Command
 
     async run(message, args)
     {
-        //The list of possible answers
         var answers = [
             "It is certain",
             "Without a doubt",
@@ -46,13 +45,13 @@ module.exports = class EightBallCommand extends Commando.Command
             "My sources say no",
             "Outlook not so good",
             "Very doubtful"
-        ]
+        ];
 
         //If a question has been asked, answer it
-        if(args != "")
+        if(args.question != "")
         {
             var roll = Math.floor(Math.random() * answers.length);
-            message.reply(" **asked**: " + args + "\n **Answer**: " + answers[roll]);
+            message.reply(" **asked**: " + args.question + "\n **Answer**: " + answers[roll]);
         }
         //Otherwise, require a question
         else

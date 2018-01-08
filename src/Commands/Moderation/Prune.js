@@ -6,8 +6,8 @@ module.exports = class PruneCommand extends Commando.Command
     {
         super(client, {
             name: "prune",
-            aliases: ['p'],
-            group: "mod",
+            aliases: ['p', 'purge'],
+            group: "moderation",
             memberName: "prune",
             description: "Prunes the amount of messages specified",
             examples: ["-prune 10"],
