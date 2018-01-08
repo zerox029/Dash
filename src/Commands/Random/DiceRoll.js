@@ -6,6 +6,7 @@ module.exports = class DiceRollCommand extends Commando.Command
     {
         super(client, {
             name: "roll",
+            aliases: ['dice', 'diceroll'],
             group: 'random',
             memberName: "roll",
             description: "Rolls a die"

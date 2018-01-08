@@ -18,4 +18,5 @@ bot.registry
     .registerCommandsIn(__dirname +  "/Commands");
 
 //TODO: Link to const.json
-bot.login('');
+bot.login('Mzk5NzA1ODAxNzE3MTg2NTcx.DTQ-jA.uZmTRGMqqxtq0tdgaE6ivXJpDJQ');
+console.log(bot.commandPrefix);
