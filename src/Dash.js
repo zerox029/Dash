@@ -45,23 +45,7 @@ class Dash {
 		return () => {
 			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
 
-			this.client.user.setPresence({
-				'activity': {
-					'application': '376520643862331396',
-					'name': '@Ribbon help',
-					'type': 'WATCHING',
-					'details': 'Made by Favna',
-					'state': 'https://ribbon.favna.xyz',
-					'assets': {
-						'largeImage': '385133227997921280',
-						'smallImage': '385133144245927946',
-						'largeText': 'Invite me to your server!',
-						'smallText': 'Look at the website!'
-					},
-					'party': {'size': [this.client.guilds.size, 2000]}
-				}
-			});
-
+			this.client.user.setGame("@Dash help")
 			this.isReady = true;
 		};
 	}
