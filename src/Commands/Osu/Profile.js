@@ -35,11 +35,17 @@ module.exports = class ProfileCommand extends Commando.Command
 
         request(APIRequest, function(error, response, body) {
             profileData = JSON.parse(body);
-            console.log(profileData);
+            profileData = profileData[0];
 
+
+             console.log(APIRequest);
             //Create the reply
-            var reply = profileData[0].username + " is currently ranked " + profileData[0].pp_rank + " globally";
-            message.reply(reply);
+            var reply = "Stats for " + profileData.username + ":  http://osu.ppy.sh/u/" + profileData.user_id + "\n";
+            reply += "Score:   " + profileData.ranked_score + "(#" + profileData.pp_rank + ")\n";
+            reply += "Plays:   " + profileData.playcount + "(lvl" + profileData.level + ")\n";
+            reply += "Accuracy:   " + profileData.accuracy + "%"; 
+            
+            message.channel.send(reply);
         });
     }
 }
