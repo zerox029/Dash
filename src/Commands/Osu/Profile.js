@@ -1,4 +1,5 @@
-const Commando = require("discord.js-commando");
+const Commando = require("discord.js-commando"),
+      request = require('request');
 
 module.exports = class ProfileCommand extends Commando.Command
 {
@@ -19,7 +20,7 @@ module.exports = class ProfileCommand extends Commando.Command
                 {
                     key: 'gamemode',
                     prompt: 'Any gamemode preference?\n',
-                    type: 'int',
+                    type: 'integer',
                     default: '0'
                 }
             ]
@@ -28,12 +29,16 @@ module.exports = class ProfileCommand extends Commando.Command
 
     async run(message, args)
     {
-        var baseAPIURL = "https://osu.ppy.sh/api/";
+        var APIRequest = "https://osu.ppy.sh/api/get_user?k=" + process.env.OSU_API_KEY + "&u=" + args.username;
+        var profileData;
 
-        if(args.catergoy == "profile")
-        {
-            var APIRequest = "get_user?k=" + process.env.OSU_API_KEY + "&u=" + args.username;
-            
-        }
+        request(APIRequest, function(error, response, body) {
+            profileData = JSON.parse(body);
+            console.log(profileData);
+
+            //Create the reply
+            var reply = profileData[0].username + " is currently ranked " + profileData[0].pp_rank + " globally";
+            message.reply(reply);
+        });
     }
 }
