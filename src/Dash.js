@@ -35,7 +35,7 @@ class Dash {
 		this.token = token;
 		this.client = new Commando.Client({
 			'commandPrefix': '-',
-			'owner': '112001393140723712',
+			'owner': '230702257480400896',
 			'selfbot': false
 		});
 		this.isReady = false;

@@ -6,7 +6,8 @@ module.exports = class ProfileCommand extends Commando.Command
     constructor(client)
     {
         super(client, {
-            name: "profile",
+            name: "osuprofile",
+            aliases: ['oprofile'],
             group: 'osu',
             memberName: "profile",
             description: "Displays stats from a user profile",
