@@ -1,5 +1,3 @@
-import { url } from "inspector";
-
 const Commando = require("discord.js-commando"),
       request = require('request');
 
