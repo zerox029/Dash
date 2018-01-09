@@ -9,7 +9,7 @@ module.exports = class NeedsMoreJpeg extends Commando.Command
             aliases: ['jpg', 'needsmorejpeg', 'needsmorejpeg', 'jpgify', 'jpegify', 'j'],
             group: 'fun',
             memberName: "jpegify",
-            description: "The solution to all your jpeg making problems..."
+            description: "The solution to all your jpeg making problems... - **DOESN'T WORK**"
         });
     }
 

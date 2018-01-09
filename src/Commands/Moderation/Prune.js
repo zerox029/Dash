@@ -5,12 +5,12 @@ module.exports = class PruneCommand extends Commando.Command
     constructor(client)
     {
         super(client, {
-            name: "prune",
-            aliases: ['p', 'purge'],
+            name: "purge",
+            aliases: ['p', 'prune'],
             group: "moderation",
             memberName: "prune",
-            description: "Prunes the amount of messages specified",
-            examples: ["-prune 10"],
+            description: "Deletes the amount of messages specified",
+            examples: ["-purge 10"],
             clientPermissions: ['MANAGE_MESSAGES'],
             args: [
                 {

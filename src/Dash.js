@@ -195,7 +195,8 @@ class Dash {
 			.registerGroups([
 				['fun', 'Fun and Games to play with the bot'],
 				['moderation', 'Moderate your server'],
-				['random', 'Randomizers of all sorts']
+				['random', 'Randomizers of all sorts'],
+				['osu', 'Stats directly from Osu!']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()
