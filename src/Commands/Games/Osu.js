@@ -1,15 +1,14 @@
 const Commando = require("discord.js-commando"),
-      request = require('request');
+      rp = require('request-promise');
 
 module.exports = class ProfileCommand extends Commando.Command
 {
     constructor(client)
     {
         super(client, {
-            name: "osuprofile",
-            aliases: ['oprofile'],
+            name: "osu",
             group: 'games',
-            memberName: "profile",
+            memberName: "osu",
             description: "Retrieves various info from Osu!\n",
             args: [
                 {
@@ -26,40 +25,19 @@ module.exports = class ProfileCommand extends Commando.Command
             ]
         });
     }
-
+    
     async run(message, args)
     {
-        var APIRequest = "https://osu.ppy.sh/api/";
-
-        //If the user is requesting profile data
-        if(args.type == "profile")
-        {
-        }
-
-        else if(args.type == "beatmap")
-        {
-            //TODO: retrieve beatmap info
-        }
-
         switch(args.type)
         {
             case "profile":
-                var url = APIRequest + "get_user?k=" + process.env.OSU_API_KEY + "&u=" + args.specifier;
-
-                request(APIRequest + urlAppend, function(error, response, body) {
-                    profileData = JSON.parse(body);
-                    profileData = profileData[0];
-        
-                    console.log(url);
-
-                    //Create the reply
-                    var reply = "Stats for " + profileData.username + ":  http://osu.ppy.sh/u/" + profileData.user_id + "\n";
-                    reply += "Score:   " + profileData.ranked_score + "(#" + profileData.pp_rank + ")\n";
-                    reply += "Plays:   " + profileData.playcount + "(lvl" + profileData.level + ")\n";
-                    reply += "Accuracy:   " + profileData.accuracy + "%"; 
-                    
-                    message.channel.send(reply);
+                var url = "https://osu.ppy.sh/api/get_user?k=" + process.env.OSU_API_KEY + "&u=" + args.specifier;
+                var profileData = await rp(url, function(error, response, body) {
+                    return body;
                 });
+
+                var profileReply = await this.createProfileReply(profileData);
+                message.channel.send(profileReply);
 
                 break;
             
@@ -67,5 +45,18 @@ module.exports = class ProfileCommand extends Commando.Command
                 //TODO: retrieve beatmap info
 
         }
+    }
+
+    createProfileReply(profileData)
+    {
+        var profileData = JSON.parse(profileData);
+        profileData = profileData[0];
+
+        var reply = "Stats for " + profileData.username + ":  http://osu.ppy.sh/u/" + profileData.user_id + "\n";
+        reply += "Score:   " + profileData.ranked_score + "(#" + profileData.pp_rank + ")\n";
+        reply += "Plays:   " + profileData.playcount + "(lvl" + profileData.level + ")\n";
+        reply += "Accuracy:   " + profileData.accuracy + "%"; 
+
+        return reply;
     }
 }
