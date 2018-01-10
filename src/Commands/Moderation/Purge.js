@@ -30,31 +30,11 @@ module.exports = class PruneCommand extends Commando.Command
 
     async run(message, args)
     {
-        //If the argument is a number
-        if(!isNaN(args.amount))
-        {
-            //If the argument is bigger than 0, remove n messages
-            if(args.amount > 0)
-            {   
-                message.channel.bulkDelete(args.amount + 1, true);
+        message.channel.bulkDelete(args.amount + 1, true);
 
-                const reply = await msg.say(`\`Deleted ${args.amount} messages\``);
-
-                return reply.delete({
-                    'timeout': 1000,
-                    'reason': 'Deleting own return message after purge'
-                });
-            }
-            //Otherwise complain
-            else
-                message.reply("Please enter a valid amount of messages to remove");
-                message.remove(0);
-        }
-        //Otherwise complain
-        else
-        {
-            message.reply("Please enter a valid amount of messages to remove");
-            message.remove(0);
-        }
+        // return reply.delete({
+        //     'timeout': 1000,
+        //     'reason': 'Deleting own return message after purge'
+        // });
     }
 }

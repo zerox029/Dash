@@ -13,7 +13,7 @@ module.exports = class ProfileCommand extends Commando.Command
             args: [
                 {
                     key: 'type',
-                    prompt: 'What kinf of info are you looking for?\n',
+                    prompt: 'What kind of info are you looking for?\n',
                     type: 'string',
                     default: ''
                 },
@@ -21,16 +21,22 @@ module.exports = class ProfileCommand extends Commando.Command
                     key: 'specifier',
                     prompt: 'Depends on what info you are looking for?\n',
                     type: 'string'
+                },
+                {
+                    key: 'gamemode',
+                    prompt: 'What gamemode are you looking for? Optional default is Standard\n',
+                    type: 'integer'
                 }
             ]
         });
     }
-    
+
     async run(message, args)
     {
         switch(args.type)
         {
             case "profile":
+                this.args[1].prompt = "Who do you wish to stalk?\n";
                 var url = "https://osu.ppy.sh/api/get_user?k=" + process.env.OSU_API_KEY + "&u=" + args.specifier;
                 var profileData = await rp(url, function(error, response, body) {
                     return body;
@@ -38,12 +44,7 @@ module.exports = class ProfileCommand extends Commando.Command
 
                 var profileReply = await this.createProfileReply(profileData);
                 message.channel.send(profileReply);
-
                 break;
-            
-            case "beatmap":
-                //TODO: retrieve beatmap info
-
         }
     }
 
