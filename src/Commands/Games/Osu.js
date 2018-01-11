@@ -6,7 +6,7 @@ module.exports = class ProfileCommand extends Commando.Command
     constructor(client)
     {
         super(client, {
-            name: "osu",
+            name: 'osu',
             group: 'games',
             memberName: "osu",
             description: "Retrieves various info from Osu!\n",
@@ -15,7 +15,6 @@ module.exports = class ProfileCommand extends Commando.Command
                     key: 'type',
                     prompt: 'What kind of info are you looking for?\n',
                     type: 'string',
-                    default: ''
                 },
                 {
                     key: 'specifier',
@@ -24,12 +23,14 @@ module.exports = class ProfileCommand extends Commando.Command
                 },
                 {
                     key: 'gamemode',
-                    prompt: 'What gamemode are you looking for? Optional default is Standard\n',
-                    type: 'integer'
+                    prompt: 'What gamemode are you looking for? 0: Standard | 1: Taiko | 2: CtB | 3: Mania\n',
+                    type: 'integer',
                 }
             ]
         });
     }
+
+    //TODO: CHANGE SPECIFER PROMPT ON PROMPTING
 
     async run(message, args)
     {
@@ -37,13 +38,17 @@ module.exports = class ProfileCommand extends Commando.Command
         {
             case "profile":
                 this.args[1].prompt = "Who do you wish to stalk?\n";
+
                 var url = "https://osu.ppy.sh/api/get_user?k=" + process.env.OSU_API_KEY + "&u=" + args.specifier;
-                var profileData = await rp(url, function(error, response, body) {
+                
+                var profileData = await rp(url, function(error, response, body) 
+                {
                     return body;
                 });
 
                 var profileReply = await this.createProfileReply(profileData);
                 message.channel.send(profileReply);
+
                 break;
         }
     }

@@ -10,22 +10,21 @@ module.exports = class EightBallCommand extends Commando.Command
             group: 'random',
             memberName: "coinflip",
             description: "Heads or Tails, that is the question",
-            examples: ["-coinflip 5"],
+            examples: ["coinflip {Coin Amount}", "coinflip 5"],
             args: [
                 {
                     key: 'amount',
-                    prompt: 'The amount of coins to flip?\n',
-                    max: 10,
+                    prompt: 'How many coins do you want to flip?\n',
+                    min: 1,
                     type: 'integer',
                     default: '1'
-                },
+                }
             ]
         });
     }
 
     async run(message, args)
     {
-        //The list of possible answers
         var answers = [
             "Heads",
             "Tails"
@@ -33,6 +32,7 @@ module.exports = class EightBallCommand extends Commando.Command
 
         for(var i = 0; i < args.amount; i++)
         {
+            //Either 0 or 1
             var roll = Math.floor(Math.random() * answers.length);
 
             if(args.amount == 1)
@@ -41,7 +41,7 @@ module.exports = class EightBallCommand extends Commando.Command
             }
             else
             {
-                var coinNumber = i+1;
+                var coinNumber = i + 1;
                 message.channel.send("The coin number " + coinNumber + " landed on " + answers[roll]);
             }
         }

@@ -10,12 +10,12 @@ module.exports = class PruneCommand extends Commando.Command
             group: "moderation",
             memberName: "prune",
             description: "Deletes the amount of messages specified",
-            examples: ["-purge 10"],
+            examples: ["purge {Message Count}", "purge 50"],
             clientPermissions: ['MANAGE_MESSAGES'],
             args: [
                 {
                     key: 'amount',
-                    prompt: 'The amount of messages you want deleted?\n',
+                    prompt: 'How many messages do you want do delete?\n',
                     min: 1,
                     type: 'integer',
                     default: ''
@@ -30,11 +30,13 @@ module.exports = class PruneCommand extends Commando.Command
 
     async run(message, args)
     {
-        message.channel.bulkDelete(args.amount + 1, true);
-
-        // return reply.delete({
-        //     'timeout': 1000,
-        //     'reason': 'Deleting own return message after purge'
-        // });
+        try
+        {
+            message.channel.bulkDelete(args.amount + 1, true);
+        }
+        catch(err)
+        {
+            Console.log(err);
+        }
     }
 }

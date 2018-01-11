@@ -17,7 +17,7 @@ module.exports = class EightBallCommand extends Commando.Command
                     key: 'question',
                     prompt: 'What question would you like answered?\n',
                     type: 'string',
-                },
+                }
             ]
         });
     }
@@ -27,7 +27,7 @@ module.exports = class EightBallCommand extends Commando.Command
         var reply = message.author + " **asked**: " + args.question + "\n**Answer**: ";
         reply += predict();
 
-        message.channel.send(reply);
+        message.say(reply);
         message.delete();
     }
 }
