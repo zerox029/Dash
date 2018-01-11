@@ -2,6 +2,7 @@
 *.env
 
 settings.sqlite3
+database.sqlite
 
 # Logs
 logs
