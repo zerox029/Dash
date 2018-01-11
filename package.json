@@ -18,6 +18,8 @@
     "request": "^2.83.0",
     "request-json": "^0.6.2",
     "request-promise": "^4.2.2",
-    "sqlite": "^2.9.0"
+    "sequelize": "^4.31.0",
+    "sqlite": "^2.9.0",
+    "sqlite3": "^3.1.13"
   }
 }
