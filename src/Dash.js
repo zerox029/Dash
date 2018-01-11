@@ -1,7 +1,7 @@
 const Commando = require('discord.js-commando'),
 	Discord = require('discord.js'),
 	Path = require('path'),
-	sqlite = require('sqlite3');
+	sqlite = require('sqlite');
 
 class Dash {
 	constructor (token) {
@@ -171,7 +171,6 @@ class Dash {
 				['moderation', 'Moderate your server'],
 				['random', 'Randomizers of all sorts'],
 				['games', 'Play games or get your stats!'],
-				['roles', "All that's necessary to manage selfroles"]
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()
