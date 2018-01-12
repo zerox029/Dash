@@ -7,7 +7,7 @@ module.exports = class EightBallCommand extends Commando.Command
         super(client, {
             name: "coinflip",
             aliases: ['coin', 'flip'],
-            group: 'random',
+            group: 'fun',
             memberName: "coinflip",
             description: "Heads or Tails, that is the question",
             examples: ["coinflip {Coin Amount}", "coinflip 5"],

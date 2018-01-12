@@ -169,8 +169,8 @@ class Dash {
 			.registerGroups([
 				['fun', 'Fun and Games to play with the bot'],
 				['moderation', 'Moderate your server'],
-				['random', 'Randomizers of all sorts'],
 				['games', 'Play games or get your stats!'],
+				['nsfw', 'More kinky commands | 18+']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()

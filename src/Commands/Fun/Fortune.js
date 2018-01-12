@@ -8,7 +8,7 @@ module.exports = class DiceRollCommand extends Commando.Command
         super(client, {
             name: "fortune",
             aliases: ['fortunecookie'],
-            group: 'random',
+            group: 'fun',
             memberName: "fortune",
             description: "Decides you're fate"
         });
