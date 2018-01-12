@@ -13,7 +13,7 @@ const UserItems = sequelize.import('Models/UserItems');
 
 UserItems.belongsTo(CurrencyShop, {foreignKey: 'item_id', as: 'item'});
 
-User.prototype.addItem = async function (item){
+Users.prototype.addItem = async function (item){
     const userItem = await UserItems.findOne({
         where: {user_id: this.user_id, item_id: this.item_id},
     });

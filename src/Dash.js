@@ -1,7 +1,7 @@
 const Commando = require('discord.js-commando'),
-	Discord = require('discord.js'),
-	Path = require('path'),
-	sqlite = require('sqlite');
+	  Discord = require('discord.js'),
+	  Path = require('path'),
+	  sqlite = require('sqlite');
 
 class Dash {
 	constructor (token) {
@@ -92,7 +92,7 @@ class Dash {
 			if (msg.guild) {
 				if (!msg.guild.available) {
 					return; // eslint-disable-line no-useless-return
-				}
+				}	
 			}
 		};
 	}
@@ -170,7 +170,8 @@ class Dash {
 				['fun', 'Fun and Games to play with the bot'],
 				['moderation', 'Moderate your server'],
 				['games', 'Play games or get your stats!'],
-				['nsfw', 'More kinky commands | 18+']
+				['nsfw', 'More kinky commands | 18+'],
+				['currency', 'Money Money Money Money... Need more money']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()
