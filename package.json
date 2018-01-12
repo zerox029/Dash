@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Étienne Plante",
-  "license": "ISC",
+  "license": "GNU",
   "dependencies": {
     "discord.js": "^11.2.1",
     "discord.js-commando": "^0.9.0",
