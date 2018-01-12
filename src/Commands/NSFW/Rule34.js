@@ -1,7 +1,8 @@
 const Commando = require("discord.js-commando"),
-      request = require("request");
+      request = require("request"),
+      xmlConvert = require("xml-js"); 
 
-class Rule34Command extends Commando.Command
+module.exports = class Rule34Command extends Commando.Command
 {
     constructor(client)
     {
@@ -26,7 +27,6 @@ class Rule34Command extends Commando.Command
         var queryUrl = this.createUrl(args.tags);
         var posts = this.retrieveQueryResponse(queryUrl);
         console.log(posts);
-        console.log("____________" + queryUrl);
     }
 
     createUrl(tags)
