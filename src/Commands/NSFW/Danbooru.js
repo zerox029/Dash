@@ -1,16 +1,16 @@
 const Commando = require("discord.js-commando"),
       booru = require("booru");
 
-module.exports = class Rule34Command extends Commando.Command
+module.exports = class DanbooruCommand extends Commando.Command
 {
     constructor(client)
     {
         super(client, {
-            name: "rule34",
-            aliases: ['r34'],
+            name: "danbooru",
+            aliases: ['db', 'dbooru'],
             group: 'nsfw',
-            memberName: "rule34",
-            description: "Sends a NSFW pic from r34",
+            memberName: "danbooru",
+            description: "Sends a NSFW pic from danbooru",
             args: [
                 {
                     key: 'tags',
@@ -25,7 +25,7 @@ module.exports = class Rule34Command extends Commando.Command
     {
         try
         {
-            const booruData = await booru.search('r34', args.tags.split(' '), {
+            const booruData = await booru.search('danbooru', args.tags.split(' '), {
                 'limit': 1,
                 'random': true
             }).then(booru.commonfy);

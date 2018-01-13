@@ -1,16 +1,16 @@
 const Commando = require("discord.js-commando"),
       booru = require("booru");
 
-module.exports = class Rule34Command extends Commando.Command
+module.exports = class GelbooruCommand extends Commando.Command
 {
     constructor(client)
     {
         super(client, {
-            name: "rule34",
-            aliases: ['r34'],
+            name: "gelbooru",
+            aliases: ['gb', 'gbooru'],
             group: 'nsfw',
-            memberName: "rule34",
-            description: "Sends a NSFW pic from r34",
+            memberName: "gelbooru",
+            description: "Sends a NSFW pic from gelbooru",
             args: [
                 {
                     key: 'tags',
@@ -25,7 +25,7 @@ module.exports = class Rule34Command extends Commando.Command
     {
         try
         {
-            const booruData = await booru.search('r34', args.tags.split(' '), {
+            const booruData = await booru.search('gelbooru', args.tags.split(' '), {
                 'limit': 1,
                 'random': true
             }).then(booru.commonfy);
@@ -39,6 +39,7 @@ module.exports = class Rule34Command extends Commando.Command
         }
         catch(err)
         {
+
             return message.reply('Sorry! I could not find any image tagged with ' + args.tags);
         }
     }
