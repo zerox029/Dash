@@ -1,3 +1,5 @@
+[![License: GNU General Public License v3.0](https://img.shields.io/badge/License-GNU%20General%20Public%20License%20v3.0-blue.svg)](https://github.com/Favna/Discord-Self-Bot/blob/master/LICENCE.md) [![NodeV](https://img.shields.io/badge/Node-v8.5.0-FF0000.svg?style=flat-square)](https://nodejs.org/en/download/current/) [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow&style=plastic)](http://twitter.com/zerox029)
+
 # Dash
 
 A multi-purpose dicord bot written in Javascript with Node.js
