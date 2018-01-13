@@ -1,6 +1,5 @@
 const Commando = require("discord.js-commando"),
-      request = require("request"),
-      xmlConvert = require("xml-js"); 
+      booru = require("booru");
 
 module.exports = class Rule34Command extends Commando.Command
 {
@@ -22,30 +21,23 @@ module.exports = class Rule34Command extends Commando.Command
         });
     }
 
-    run(message, args)
+    async run(message, args)
     {
-        var queryUrl = this.createUrl(args.tags);
-        var posts = this.retrieveQueryResponse(queryUrl);
-        console.log(posts);
-    }
-
-    createUrl(tags)
-    {
-        var baseUrl = "https://rule34.xxx/index.php?page=dapi&s=post&q=index";
-        var query = "&tags=" + tags;
-
-        var completeUrl = baseUrl + query;
-
-        return completeUrl;
-    }
-
-    retrieveQueryResponse(url)
-    {
-        var posts = request(url, function(error, response, body) 
+        try
         {
-            return body;
-        });
+            const booruData = await booru.search('r34', args.tags.split(' '), {
+                'limit': 1,
+                'random': true
+            }).then(booru.commonfy);
 
-        return posts;
+            if(booruData)
+            {
+                return message.say("Here is what I found for " + args.tags + `: ${booruData[0].common.file_url}`);
+            }
+        }
+        catch(err)
+        {
+
+        }
     }
 }

@@ -8,7 +8,7 @@ module.exports = class OxrCommand extends Commando.Command
         super(client, {
             name: "oxr",
             aliases: ["rate", "convert"],
-            group: 'util',
+            group: 'info',
             memberName: "oxr",
             description: "Converts currency",
             args: [

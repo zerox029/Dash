@@ -10,7 +10,8 @@ class Dash {
 		this.client = new Commando.Client({
 			'commandPrefix': '-',
 			'owner': '230702257480400896',
-			'selfbot': false
+			'selfbot': false,
+			'unknownCommandResponse': false
 		});
 		this.isReady = false;
 	}
@@ -119,10 +120,10 @@ class Dash {
 		this.client.registry
 			.registerGroups([
 				['fun', 'Fun and games to play with the bot'],
+				['info', 'Information on various thing'],
 				['moderation', 'Moderate your server'],
 				['games', 'Play games or see your stats!'],
-				['nsfw', 'More kinky commands | 18+'],
-				['currency', 'Money Money Money Money... Need more money']
+				['nsfw', 'More kinky commands | 18+']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()
