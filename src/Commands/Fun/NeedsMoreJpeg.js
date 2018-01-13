@@ -58,7 +58,7 @@ module.exports = class NeedsMoreJpeg extends Commando.Command
 
             await Jimp.read(imgLink).then(function (img) 
             {
-                img.quality(2)
+                img.quality(1)
                    .write(newImagePath);
             })
             .catch(function (err) 
