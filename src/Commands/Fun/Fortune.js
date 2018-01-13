@@ -10,7 +10,7 @@ module.exports = class DiceRollCommand extends Commando.Command
             aliases: ['fortunecookie'],
             group: 'fun',
             memberName: "fortune",
-            description: "Decides you're fate"
+            description: "A good ol' fortune teller"
         });
     }
 

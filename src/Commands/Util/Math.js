@@ -7,6 +7,7 @@ module.exports = class DiceRollCommand extends Commando.Command
     {
         super(client, {
             name: "math",
+            aliases: ["calc", "calculate"],
             group: 'util',
             memberName: "math",
             description: "Evaluates a mathematical expression",

@@ -97,53 +97,6 @@ class Dash {
 		};
 	}
 
-	onGuildMemberAdd () {
-		return (member) => {
-			if (this.client.provider.get(member.guild, 'memberlogs', true)) {
-				const embed = new Discord.MessageEmbed(),
-					memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
-						member.guild.channels.exists('name', 'member-logs')
-							? member.guild.channels.find('name', 'member-logs').id
-							: null);
-
-				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
-					.setFooter(`User joined | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-					.setColor('#E24141');
-
-				if (this.client.provider.get(member.guild.id, 'defaultRole')) {
-					member.addRole(this.client.provider.get(member.guild.id, 'defaultRole'));
-					embed.setDescription(`Automatically assigned the role ${member.guild.roles.get(this.client.provider.get(member.guild.id, 'defaultRole')).name} to this member`);
-				}
-
-				if (memberLogs !== null && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
-					.has('SEND_MESSAGES')) {
-					member.guild.channels.get(memberLogs).send({embed});
-				}
-			}
-		};
-	}
-
-	onGuildMemberRemove () {
-		return (member) => {
-			if (this.client.provider.get(member.guild, 'memberlogs', true)) {
-				const embed = new Discord.MessageEmbed(),
-					memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
-						member.guild.channels.exists('name', 'member-logs')
-							? member.guild.channels.find('name', 'member-logs').id
-							: null);
-
-				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
-					.setFooter(`User left | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-					.setColor('#E24141');
-
-				if (memberLogs !== null && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
-					.has('SEND_MESSAGES')) {
-					member.guild.channels.get(memberLogs).send({embed});
-				}
-			}
-		};
-	}
-
 	init () {
 		this.client
 			.on('ready', this.onReady())
@@ -157,8 +110,6 @@ class Dash {
 			.on('commandBlocked', this.onCmdBlock())
 			.on('commandStatusChange', this.onCmdStatusChange())
 			.on('groupStatusChange', this.onGroupStatusChange())
-			.on('guildMemberAdd', this.onGuildMemberAdd())
-			.on('guildMemberRemove', this.onGuildMemberRemove())
 			.on('message', this.onMessage());
 
 		this.client.setProvider(
@@ -167,9 +118,9 @@ class Dash {
 
 		this.client.registry
 			.registerGroups([
-				['fun', 'Fun and Games to play with the bot'],
+				['fun', 'Fun and games to play with the bot'],
 				['moderation', 'Moderate your server'],
-				['games', 'Play games or get your stats!'],
+				['games', 'Play games or see your stats!'],
 				['nsfw', 'More kinky commands | 18+'],
 				['currency', 'Money Money Money Money... Need more money']
 			])
