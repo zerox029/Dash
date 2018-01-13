@@ -28,7 +28,7 @@ Note that while we already have certain standards in place, nothing is set in st
 
 # Licence
 
-The osu! client code and framework are licensed under the [GNU licence](https://opensource.org/licenses/GNU). Please see [the licence file](LICENCE) for more information. [tl;dr](https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)) you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source.
+This project is licensed under the [GNU licence](https://opensource.org/licenses/GNU). Please see [the licence file](LICENCE) for more information. [tl;dr](https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)) you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source.
 
 [![forthebadge](http://forthebadge.com/images/badges/designed-in-ms-paint.svg)](http://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
