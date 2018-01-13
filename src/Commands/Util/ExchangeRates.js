@@ -13,12 +13,6 @@ module.exports = class OxrCommand extends Commando.Command
             description: "Converts currency",
             args: [
                 {
-                    key: "amount",
-                    prompt: "How much money do you wish to convert?\n",
-                    type: "integer",
-                    min: 0
-                },
-                {
                     key: "from",
                     prompt: "What currency do you wish to start from?\n",
                     type: "string",
@@ -27,11 +21,17 @@ module.exports = class OxrCommand extends Commando.Command
                     key: "to",
                     prompt: "What currency do you wish to convert to?\n",
                     type: "string",
+                },
+                {
+                    key: "amount",
+                    prompt: "How much money do you wish to convert?\n",
+                    type: "integer",
                 }
             ]
         });
     }
 
+    ///TODO: Clean this up by separating into functions
     async run(message, {amount, from, to})
     {
         try
@@ -41,13 +41,16 @@ module.exports = class OxrCommand extends Commando.Command
     
             var url = "https://api.fixer.io/latest?base=" + capsFrom + "&symbols=" + capsTo;
             var oxr;
-    
-            var oxr = await request(url, function(error, response, body) 
-            {
-                return body;
-            });
+            
+                var oxr = await request(url, function(error, response, body) 
+                {
+                    return oxr;
+                });
 
             oxr = JSON.parse(oxr);
+
+            if(oxr.rates[capsTo] == undefined) throw "The ending currency is invalid";
+
             var rate = oxr.rates[capsTo];
             var converted = amount * rate;
 
@@ -55,8 +58,15 @@ module.exports = class OxrCommand extends Commando.Command
         }
         catch(err)
         {
-            message.reply("Sorry! I could not convert");
-            console.log(err);
+            ///TODO: Change this, it's ugly
+            if(err.statusCode == 422)
+            {
+                message.reply("The starting currency is invalid");
+            }
+            else
+            {
+                message.reply(err);
+            }
         }
     }
 }
