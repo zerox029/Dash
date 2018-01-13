@@ -3,6 +3,7 @@
 
 settings.sqlite3
 database.sqlite
+Data/MoreJpeg/*
 
 # Logs
 logs
