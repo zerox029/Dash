@@ -11,7 +11,7 @@ module.exports = class EightBallCommand extends Commando.Command
             group: 'fun',
             memberName: "8ball",
             description: "Decides your fate",
-            examples: ["8ball {Question}", "8ball Did somebody toucha my spaghet?"],
+            examples: ["8ball {Question}", "8ball Do I know the way of life?"],
             args: [
                 {
                     key: 'question',
@@ -22,11 +22,22 @@ module.exports = class EightBallCommand extends Commando.Command
         });
     }
 
-    async run(message, args)
+    run(message, {question})
     {
-        var reply = message.author + " **asked**: " + args.question + "\n**Answer**: ";
+        var reply = this.createReply(message, question);
+        this.sendAndDeleteMessage(message, reply);
+    }
+
+    createReply(message, question)
+    {
+        var reply = message.author + " **asked**: " + question + "\n**Answer**: ";
         reply += predict();
 
+        return reply;
+    }
+
+    sendAndDeleteMessage(message, reply)
+    {
         message.say(reply);
         message.delete();
     }

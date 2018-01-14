@@ -27,8 +27,10 @@ module.exports = class PauseCommand extends Commando.Command
         if(!queue) return message.reply("There is no music to pause.");
         if(!queue.songs[0].dispatcher) return message.reply("The song hasn't even begun yet.");
         if(!queue.songs[0].playing) return message.reply("I don't think it is a good idea to pause an already paused song");
+        
         queue.songs[0].dispatcher.pause();
         queue.songs[0].playing = false;
+        
         return message.reply(`paused the music. Use \`${this.client.commandPrefix}resume\` to continue playing.`);
     }
 

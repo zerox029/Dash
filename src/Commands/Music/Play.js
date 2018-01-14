@@ -38,7 +38,7 @@ module.exports = class PlaySongCommand extends Command {
 	async run(msg, args) {
 		const url = args.url.replace(/<(.+)>/g, '$1');
 		const queue = this.queue.get(msg.guild.id);
-
+		
 		let voiceChannel;
 		if (!queue) {
 			voiceChannel = msg.member.voiceChannel;

@@ -23,27 +23,32 @@ module.exports = class EightBallCommand extends Commando.Command
         });
     }
 
-    async run(message, args)
+    run(message, {amount})
     {
-        var answers = [
+        for(var i = 0; i < amount; i++)
+        {
+            var response = this.createResponse(amount);
+            message.say(response);
+        }
+    }
+
+    createResponse(amount)
+    {
+        var possibleAnswers = [
             "Heads",
             "Tails"
         ]
 
-        for(var i = 0; i < args.amount; i++)
-        {
-            //Either 0 or 1
-            var roll = Math.floor(Math.random() * answers.length);
+        var roll = Math.floor(Math.random() * possibleAnswers.length);
 
-            if(args.amount == 1)
-            {
-                message.channel.send("The coin landed on " + answers[roll]);
-            }
-            else
-            {
-                var coinNumber = i + 1;
-                message.channel.send("The coin number " + coinNumber + " landed on " + answers[roll]);
-            }
+        if(amount == 1)
+        {
+            return "The coin landed on " + possibleAnswers[roll];
+        }
+        else
+        {
+            var coinNumber = i + 1;
+            return "The coin number " + coinNumber + " landed on " + possibleAnswers[roll];
         }
     }
 }

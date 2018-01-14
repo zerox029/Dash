@@ -24,37 +24,13 @@ module.exports = class NeedsMoreJpeg extends Commando.Command
         });
     }
 
-    async run(message, args)
+    async run(message, {link})
     {
         try
         {
             var attachments = (message.attachments).array();
-            var imgLink;
-
-            if(attachments === undefined || attachments.length == 0)
-            {
-                if(args.link == '')
-                {
-                    throw "You haven't given me any image to jpegify";
-                }
-                else
-                {
-                    imgLink = args.link;
-                }
-            }
-            else
-            {
-                var imgLink = attachments[0].url;
-            }
-            
-            if(!isImageUrl(imgLink))
-            {
-                throw "The file you sent me is invalid";
-            }
-
-            var newFileName = this.makeID();
-            var masterFolderPath = path.join(__dirname, '..', '..', '..', 'Data', 'MoreJpeg');
-            var newImagePath = masterFolderPath + "/"+ newFileName + ".jpeg"
+            var imgLink = this.getImageLink(attachments, link)
+            var newImagePath = this.getNewFilePath();
 
             await Jimp.read(imgLink).then(function (img) 
             {
@@ -90,5 +66,47 @@ module.exports = class NeedsMoreJpeg extends Commando.Command
         }
 
         return text;
+    }
+
+    getImageLink(attachments, link)
+    {
+        if(attachments === undefined || attachments.length == 0)
+        {
+            if(link == '')
+            {
+                throw "You haven't given me any image to jpegify";
+            }
+            else
+            {
+                if(!isImageUrl(link))
+                {
+                    throw "The file you sent me is invalid";
+                }
+                else
+                {
+                    return link;
+                }
+            }
+        }
+        else
+        {
+            if(!isImageUrl(attachments[0].url))
+            {
+                throw "The file you sent me is invalid";
+            }
+            else
+            {
+                return attachments[0].url;
+            }
+        }
+    }
+
+    getNewFilePath()
+    {
+        var newFileName = this.makeID();
+        var masterFolderPath = path.join(__dirname, '..', '..', '..', 'Data', 'MoreJpeg');
+        var newImagePath = masterFolderPath + "/"+ newFileName + ".jpeg";
+
+        return newImagePath;
     }
 }
