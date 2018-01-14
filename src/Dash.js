@@ -20,7 +20,9 @@ class Dash {
 		return () => {
 			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
 
-			this.client.user.setGame("@Dash help")
+			this.client.user.setActivity("@Dash help", {
+				type: "PLAYING"
+			});
 			this.isReady = true;
 		};
 	}
