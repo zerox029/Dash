@@ -87,7 +87,6 @@ module.exports = class OxrCommand extends Commando.Command
 
     skip(guild, queue)
     {
-        console.log(queue);
         if(this.votes.has(guild.id))
         {
             clearTimeout(this.votes.get(guild.id.timeout));
