@@ -1,15 +1,16 @@
-const { Command } = require('discord.js-commando');
-const { escapeMarkdown } = require('discord.js');
-const { oneLine, stripIndents } = require('common-tags');
-const request = require('request-promise');
-const winston = require('winston');
-const YouTube = require('simple-youtube-api');
-const ytdl = require('ytdl-core');
+const { Command } = require('discord.js-commando'),
+	  { escapeMarkdown } = require('discord.js'),
+	  { oneLine, stripIndents } = require('common-tags'),
+	  request = require('request-promise'),
+	  winston = require('winston'),
+	  YouTube = require('simple-youtube-api'),
+	  ytdl = require('ytdl-core');
 
 const { DEFAULT_VOLUME, YOUTUBE_API_KEY, MAX_LENGTH, MAX_SONGS, PASSES } = process.env;
 const Song = require('../../structs/Song');
 
-module.exports = class PlaySongCommand extends Command {
+module.exports = class PlaySongCommand extends Command 
+{
 	constructor(client) {
 		super(client, {
 			name: 'play',
@@ -21,11 +22,10 @@ module.exports = class PlaySongCommand extends Command {
 				usages: 2,
 				duration: 3
 			},
-
 			args: [
 				{
 					key: 'url',
-					prompt: 'what music would you like to listen to?\n',
+					prompt: 'What music would you like to listen to?\n',
 					type: 'string'
 				}
 			]
@@ -35,25 +35,24 @@ module.exports = class PlaySongCommand extends Command {
 		this.youtube = new YouTube(YOUTUBE_API_KEY);
 	}
 
-	async run(msg, args) {
+	async run(msg, args) 
+	{
 		const url = args.url.replace(/<(.+)>/g, '$1');
 		const queue = this.queue.get(msg.guild.id);
 		
 		let voiceChannel;
-		if (!queue) {
+		if (!queue) 
+		{
 			voiceChannel = msg.member.voiceChannel;
 			if (!voiceChannel) {
 				return msg.reply('you aren\'t in a voice channel, ya dingus.');
 			}
 
 			const permissions = voiceChannel.permissionsFor(msg.client.user);
-			if (!permissions.has('CONNECT')) {
-				return msg.reply('I don\'t have permission to join your voice channel. No parties allowed there.');
-			}
-			if (!permissions.has('SPEAK')) {
-				return msg.reply('I don\'t have permission to speak in your voice channel. What a disappointment.');
-			}
-		} else if (!queue.voiceChannel.members.has(msg.author.id)) {
+			if(!this.checkForPermissions(permissions)) return;
+		} 
+		else if (!queue.voiceChannel.members.has(msg.author.id)) 
+		{
 			return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
 		}
 
@@ -62,19 +61,27 @@ module.exports = class PlaySongCommand extends Command {
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await this.youtube.getPlaylist(url);
 			return this.handlePlaylist(playlist, queue, voiceChannel, msg, statusMsg);
-		} else {
-			try {
+		} 
+		else
+		{
+			try 
+			{
 				const video = await this.youtube.getVideo(url);
 
 				return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
-			} catch (error) {
-				try {
+			} 
+			catch (err) 
+			{
+				try 
+				{
 					const videos = await this.youtube.searchVideos(url, 1)
 						.catch(() => statusMsg.edit(`${msg.author}, there were no search results.`));
 					const video2 = await this.youtube.getVideoByID(videos[0].id);
 
 					return this.handleVideo(video2, queue, voiceChannel, msg, statusMsg);
-				} catch (err) {
+				} 
+				catch (err)
+				{
 					winston.error(err);
 
 					return statusMsg.edit(`${msg.author}, couldn't obtain the search result video's details.`);
@@ -83,14 +90,33 @@ module.exports = class PlaySongCommand extends Command {
 		}
 	}
 
-	async handleVideo(video, queue, voiceChannel, msg, statusMsg) {
-		if (video.durationSeconds === 0) {
+	checkForPermissions(permissions)
+	{
+		if (!permissions.has('CONNECT')) 
+		{
+			msg.reply('I don\'t have permission to join your voice channel. No parties allowed there.');
+			return false;
+		}
+		if (!permissions.has('SPEAK')) 
+		{
+			msg.reply('I don\'t have permission to speak in your voice channel. What a disappointment.');
+			return false;
+		}
+
+		return true;
+	}
+
+	async handleVideo(video, queue, voiceChannel, msg, statusMsg) 
+	{
+		if (video.durationSeconds === 0) 
+		{
 			statusMsg.edit(`${msg.author}, you can't play live streams.`);
 
 			return null;
 		}
 
-		if (!queue) {
+		if (!queue) 
+		{
 			queue = {
 				textChannel: msg.channel,
 				voiceChannel,
@@ -105,12 +131,13 @@ module.exports = class PlaySongCommand extends Command {
 				color: 3447003,
 				author: {
 					name: `${msg.author.tag} (${msg.author.id})`,
-					icon_url: msg.author.avatarURL // eslint-disable-line camelcase
+					icon_url: msg.author.avatarURL
 				},
 				description: result
 			};
 
-			if (!result.startsWith('👍')) {
+			if (!result.startsWith('👍')) 
+			{
 				this.queue.delete(msg.guild.id);
 				statusMsg.edit('', { embed: resultMessage });
 
@@ -118,21 +145,26 @@ module.exports = class PlaySongCommand extends Command {
 			}
 
 			statusMsg.edit(`${msg.author}, joining your voice channel...`);
-			try {
+			try 
+			{
 				const connection = await queue.voiceChannel.join();
 				queue.connection = connection;
 				this.play(msg.guild, queue.songs[0]);
 				statusMsg.delete();
 
 				return null;
-			} catch (error) {
+			} 
+			catch (error) 
+			{
 				winston.error('Error occurred when joining voice channel.', error);
 				this.queue.delete(msg.guild.id);
 				statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
 
 				return null;
 			}
-		} else {
+		} 
+		else 
+		{
 			const result = await this.addSong(msg, video);
 			const resultMessage = {
 				color: 3447003,
@@ -148,17 +180,21 @@ module.exports = class PlaySongCommand extends Command {
 		}
 	}
 
-	async handlePlaylist(playlist, queue, voiceChannel, msg, statusMsg) {
+	async handlePlaylist(playlist, queue, voiceChannel, msg, statusMsg) 
+	{
 		const videos = await playlist.getVideos();
-		for (const video of Object.values(videos)) {
+		for (const video of Object.values(videos)) 
+		{
 			const video2 = await this.youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-			if (video2.durationSeconds === 0) {
+			if (video2.durationSeconds === 0)
+			{
 				statusMsg.edit(`${msg.author}, you can't play live streams.`);
 
 				return null;
 			}
 
-			if (!queue) {
+			if (!queue) 
+			{
 				queue = {
 					textChannel: msg.channel,
 					voiceChannel,
@@ -172,18 +208,23 @@ module.exports = class PlaySongCommand extends Command {
 				if (!result.startsWith('👍')) this.queue.delete(msg.guild.id);
 
 				statusMsg.edit(`${msg.author}, joining your voice channel...`);
-				try {
+				try 
+				{
 					const connection = await queue.voiceChannel.join(); // eslint-disable-line no-await-in-loop
 					queue.connection = connection;
 					this.play(msg.guild, queue.songs[0]);
 					statusMsg.delete();
-				} catch (error) {
-					winston.error('Error occurred when joining voice channel.', error);
+				}
+				catch (err) 
+				{
+					winston.error('Error occurred when joining voice channel.', err);
 					this.queue.delete(msg.guild.id);
 					statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
 				}
-			} else {
-				await this.addSong(msg, video2); // eslint-disable-line no-await-in-loop
+			} 
+			else 
+			{
+				await this.addSong(msg, video2);
 				statusMsg.delete();
 			}
 		}
@@ -193,7 +234,7 @@ module.exports = class PlaySongCommand extends Command {
 				color: 3447003,
 				author: {
 					name: `${msg.author.tag} (${msg.author.id})`,
-					icon_url: msg.author.avatarURL // eslint-disable-line camelcase
+					icon_url: msg.author.avatarURL
 				},
 				description: stripIndents`
 					Playlist: [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) added to the queue!
@@ -205,19 +246,23 @@ module.exports = class PlaySongCommand extends Command {
 		return null;
 	}
 
-	addSong(msg, video) {
+	addSong(msg, video) 
+	{
 		const queue = this.queue.get(msg.guild.id);
 
-		if (!this.client.isOwner(msg.author)) {
+		if (!this.client.isOwner(msg.author)) 
+		{
 			const songMaxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH);
-			if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
+			if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) 
+			{
 				return oneLine`
 					👎 ${escapeMarkdown(video.title)}
 					(${Song.timeString(video.durationSeconds)})
 					is too long. No songs longer than ${songMaxLength} minutes!
 				`;
 			}
-			if (queue.songs.some(song => song.id === video.id)) {
+			if (queue.songs.some(song => song.id === video.id)) 
+			{
 				return `👎 ${escapeMarkdown(video.title)} is already queued.`;
 			}
 			const songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
@@ -237,16 +282,19 @@ module.exports = class PlaySongCommand extends Command {
 		`;
 	}
 
-	play(guild, song) {
+	play(guild, song) 
+	{
 		const queue = this.queue.get(guild.id);
 
 		const vote = this.votes.get(guild.id);
-		if (vote) {
+		if (vote) 
+		{
 			clearTimeout(vote);
 			this.votes.delete(guild.id);
 		}
 
-		if (!song) {
+		if (!song) 
+		{
 			queue.textChannel.send('We\'ve run out of songs! Better queue up some more tunes.');
 			queue.voiceChannel.leave();
 			this.queue.delete(guild.id);
@@ -268,13 +316,16 @@ module.exports = class PlaySongCommand extends Command {
 		});
 		let stream;
 		let streamErrored = false;
-		if (song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/)) {
+		if (song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/)) 
+		{
 			stream = request({
 				uri: song.url,
 				headers: { 'User-Agent': `Commando v${version} (https://github.com/WeebDev/Commando/)` },
 				followAllRedirects: true
 			});
-		} else {
+		} 
+		else 
+		{
 			stream = ytdl(song.url, { audioonly: true })
 				.on('error', err => {
 					streamErrored = true;
@@ -300,7 +351,8 @@ module.exports = class PlaySongCommand extends Command {
 		song.playing = true;
 	}
 
-	get votes() {
+	get votes() 
+	{
 		if (!this._votes) this._votes = this.client.registry.resolveCommand('music:skip').votes;
 
 		return this._votes;
