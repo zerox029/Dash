@@ -42,19 +42,20 @@ module.exports = class OxrCommand extends Commando.Command
             var url = "https://api.fixer.io/latest?base=" + capsFrom + "&symbols=" + capsTo;
             var oxr;
             
-                var oxr = await request(url, function(error, response, body) 
-                {
-                    return oxr;
-                });
+            var oxr = await request(url, function(error, response, body) 
+            {
+                return oxr;
+            });
 
-            oxr = JSON.parse(oxr);
+            var args = {
+                amount: amount,
+                from: capsFrom,
+                to: capsTo
+            }
 
-            if(oxr.rates[capsTo] == undefined) throw "The ending currency is invalid";
+            var response = this.createResponse(oxr, args);
 
-            var rate = oxr.rates[capsTo];
-            var converted = amount * rate;
-
-            message.say(amount + capsFrom + " equivalates to " + converted + capsTo);
+            message.say(response);
         }
         catch(err)
         {
@@ -68,5 +69,19 @@ module.exports = class OxrCommand extends Commando.Command
                 message.reply(err);
             }
         }
+    }
+
+    createResponse(oxr, args)
+    {
+        oxr = JSON.parse(oxr);
+
+        if(oxr.rates[args.to] == undefined) throw "The ending currency is invalid";
+
+        var rate = oxr.rates[args.to];
+        var converted = args.amount * rate;
+
+        var response = args.amount + args.from + " equivalates to " + converted + args.to;
+        
+        return response;
     }
 }

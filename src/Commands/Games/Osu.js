@@ -2,6 +2,8 @@ const Commando = require("discord.js-commando"),
       Discord  = require("discord.js"),
       rp       = require('request-promise');
 
+const OSU_API_KEY = process.env;
+
 module.exports = class ProfileCommand extends Commando.Command
 {
     constructor(client)
@@ -31,18 +33,16 @@ module.exports = class ProfileCommand extends Commando.Command
         });
     }
 
-    //TODO: CHANGE SPECIFER PROMPT ON PROMPTING
-
-    async run(message, args)
+    async run(message, {type, specifier, gamemode})
     {
-        switch(args.type)
+        switch(type)
         {
             case "profile":
-                var gamemodeInt = this.getGamemodeInteger(args.gamemode)
+                var gamemodeInt = this.getGamemodeInteger(gamemode)
 
                 if(gamemodeInt != null)
                 {
-                    var url = "https://osu.ppy.sh/api/get_user?k=" + process.env.OSU_API_KEY + "&u=" + args.specifier + "&m=" + gamemodeInt;
+                    var url = "https://osu.ppy.sh/api/get_user?k=" + OSU_API_KEY + "&u=" + specifier + "&m=" + gamemodeInt;
 
                     var profileData = await rp(url, function(error, response, body) 
                     {
@@ -82,6 +82,14 @@ module.exports = class ProfileCommand extends Commando.Command
             case "catch the beat":
                 return 2;
             case "mania":
+                return 3;
+            case "0":
+                return 0;
+            case "1":
+                return 0;
+            case "2":
+                return 2;
+            case "3":
                 return 3;
             default:
                 return null;
@@ -135,19 +143,5 @@ module.exports = class ProfileCommand extends Commando.Command
           };
 
         return embed;
-    }
-
-    createScoresReply(scoresData)
-    {
-        var scoresData = JSON.parse(scoresData);
-        var reply;
-
-        for(var i = 0; i > scoresData.length; i++)
-        {
-            var scoreCount = i + 1;
-            reply += scoreCount + ": " + scoresData.pp + "\n";
-        }
-
-        return reply;
     }
 }
