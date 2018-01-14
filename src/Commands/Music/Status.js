@@ -35,9 +35,12 @@ module.exports = class MusicStatusCommand extends Commando.Command
     createResponse(song, currentTime)
     {
         const embed = {
-			color: 3447003,
+            color: 3447003,
+            footer: {
+                "text": song.username + " ran this command"
+            },
 			author: {
-				name: `${song.username}`,
+				name: 'Current song status',
 				icon_url: song.avatar
 			},
 			description: stripIndents`

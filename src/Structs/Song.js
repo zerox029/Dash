@@ -26,7 +26,7 @@ module.exports = class Song {
 
     get username()
     {
-        const name = `${this.member.user.tag} (${this.member.user.id})`;
+        const name = `${this.member.user.username}`;
 
         return Util.escapeMarkdown(name);
     }

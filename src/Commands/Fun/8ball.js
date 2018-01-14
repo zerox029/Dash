@@ -24,21 +24,31 @@ module.exports = class EightBallCommand extends Commando.Command
 
     run(message, {question})
     {
-        var reply = this.createReply(message, question);
-        this.sendAndDeleteMessage(message, reply);
+        var embed = this.createReply(message, question);
+        this.sendAndDeleteMessage(message, embed);
     }
 
     createReply(message, question)
     {
-        var reply = message.author + " **asked**: " + question + "\n**Answer**: ";
-        reply += predict();
+        const prediction = predict();
+        const embed = {
+            "description": "**" + message.author.username + " asked**: " + question + "\n**Answer**: " + prediction,
+            "color": 3447003,
+            "footer": {
+                "text": message.author.username + " ran this command"
+            },
+            "author": {
+            "name": "8Ball",
+            "icon_url": message.author.avatarURL
+            }
+        };
 
-        return reply;
+        return embed;
     }
 
-    sendAndDeleteMessage(message, reply)
+    sendAndDeleteMessage(message, embed)
     {
-        message.say(reply);
+        message.embed(embed);
         message.delete();
     }
 }

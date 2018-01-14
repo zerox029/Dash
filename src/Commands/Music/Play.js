@@ -130,7 +130,7 @@ module.exports = class PlaySongCommand extends Command
 			const resultMessage = {
 				color: 3447003,
 				author: {
-					name: `${msg.author.tag} (${msg.author.id})`,
+					name: `${msg.author.username}`,
 					icon_url: msg.author.avatarURL
 				},
 				description: result
@@ -169,8 +169,8 @@ module.exports = class PlaySongCommand extends Command
 			const resultMessage = {
 				color: 3447003,
 				author: {
-					name: `${msg.author.tag} (${msg.author.id})`,
-					icon_url: msg.author.avatarURL // eslint-disable-line camelcase
+					name: `${msg.author.username}`,
+					icon_url: msg.author.avatarURL
 				},
 				description: result
 			};
@@ -185,7 +185,7 @@ module.exports = class PlaySongCommand extends Command
 		const videos = await playlist.getVideos();
 		for (const video of Object.values(videos)) 
 		{
-			const video2 = await this.youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
+			const video2 = await this.youtube.getVideoByID(video.id);
 			if (video2.durationSeconds === 0)
 			{
 				statusMsg.edit(`${msg.author}, you can't play live streams.`);
@@ -232,8 +232,11 @@ module.exports = class PlaySongCommand extends Command
 		queue.textChannel.send({
 			embed: {
 				color: 3447003,
+				footer: {
+					"text": message.author.username + " ran this command"
+				},
 				author: {
-					name: `${msg.author.tag} (${msg.author.id})`,
+					name: `Added to the queue`,
 					icon_url: msg.author.avatarURL
 				},
 				description: stripIndents`
@@ -305,8 +308,11 @@ module.exports = class PlaySongCommand extends Command
 			embed: {
 				color: 3447003,
 				author: {
-					name: song.username,
+					name: "Added to the queue",
 					icon_url: song.avatar
+				},
+				footer: {
+					"text": song.username + " ran this command"
 				},
 				description: `
 					${song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/) ? `${song}` : `[${song}](${`${song.url}`})`}

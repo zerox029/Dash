@@ -53,9 +53,9 @@ module.exports = class OxrCommand extends Commando.Command
                 to: capsTo
             }
 
-            var response = this.createResponse(oxr, args);
+            var embed = this.createEmbed(oxr, args, message);
 
-            message.say(response);
+            message.embed(embed);
         }
         catch(err)
         {
@@ -71,7 +71,7 @@ module.exports = class OxrCommand extends Commando.Command
         }
     }
 
-    createResponse(oxr, args)
+    createEmbed(oxr, args, message)
     {
         oxr = JSON.parse(oxr);
 
@@ -80,8 +80,18 @@ module.exports = class OxrCommand extends Commando.Command
         var rate = oxr.rates[args.to];
         var converted = args.amount * rate;
 
-        var response = args.amount + args.from + " equivalates to " + converted + args.to;
-        
-        return response;
+        const embed = {
+            "description": "**" + args.amount + args.from + "** equivalates to **" + converted + args.to + "**\nThe current exchange rate is of **" + rate + "**",
+            "color": 3447003,
+            "footer": {
+                "text": message.author.username + " ran this command"
+            },
+            "author": {
+            "name": "Exchange rates",
+            "icon_url": message.author.avatarURL
+            }
+        };
+
+        return embed;
     }
 }

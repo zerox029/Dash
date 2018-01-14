@@ -2,8 +2,6 @@ const Commando = require("discord.js-commando"),
       Discord  = require("discord.js"),
       rp       = require('request-promise');
 
-const OSU_API_KEY = process.env;
-
 module.exports = class ProfileCommand extends Commando.Command
 {
     constructor(client)
@@ -39,10 +37,9 @@ module.exports = class ProfileCommand extends Commando.Command
         {
             case "profile":
                 var gamemodeInt = this.getGamemodeInteger(gamemode)
-
                 if(gamemodeInt != null)
                 {
-                    var url = "https://osu.ppy.sh/api/get_user?k=" + OSU_API_KEY + "&u=" + specifier + "&m=" + gamemodeInt;
+                    var url = "https://osu.ppy.sh/api/get_user?k=" + process.env.OSU_API_KEY + "&u=" + specifier + "&m=" + gamemodeInt;
 
                     var profileData = await rp(url, function(error, response, body) 
                     {
@@ -122,7 +119,7 @@ module.exports = class ProfileCommand extends Commando.Command
         const completeScoreText = rankedScoreText + lvlText + "\n" + ppText + rankText + "\n" + accText;
 
         const embed = {
-            "color": 1566961,
+            "color": 3447003,
             "footer": {
               "text": message.author.username + " ran this command"
             },

@@ -31,7 +31,7 @@ module.exports = class StopMusicCommand extends Commando.Command
         queue.songs = [];
         if(song.dispatcher) song.dispatcher.end();
 
-        return msg.reply("you've just killed the party. Congrats. 👏");
+        return message.reply("you've just killed the party. Congrats. 👏");
     }
 
     get queue()

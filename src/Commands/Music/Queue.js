@@ -39,10 +39,19 @@ module.exports = class QueueCommand extends Command
         const currentSong = queue.songs[0];
         const currentTime = currentSong.dispatcher ? currentSong.dispatcher.time / 1000 : 0;
 
-		return message.embed({
+		const reply = this.createReply(message, paginated, currentSong, currentTime, totalLength);
+		message.embed(reply);
+    }
+
+	createReply(message, paginated, currentSong, currentTime, totalLength)
+	{
+		var embed = {
 			color: 3447003,
+			footer: {
+				"text": message.author.username + " ran this command"
+			},
 			author: {
-				name: `${message.author.tag} (${message.author.id})`,
+				name: `Song queue`,
 				icon_url: message.author.avatarURL
 			},
 			description: stripIndents`
@@ -58,8 +67,10 @@ module.exports = class QueueCommand extends Command
 				`}
 				**Total queue time:** ${Song.timeString(totalLength)}
 			`
-		});
-    }
+		};
+
+		return embed
+	}
 
     get queue()
     {
