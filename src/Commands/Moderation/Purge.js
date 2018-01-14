@@ -17,8 +17,7 @@ module.exports = class PruneCommand extends Commando.Command
                     key: 'amount',
                     prompt: 'How many messages do you want do delete?\n',
                     min: 1,
-                    type: 'integer',
-                    default: ''
+                    type: 'integer'
                 }
             ]
         });
@@ -28,15 +27,15 @@ module.exports = class PruneCommand extends Commando.Command
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
 	}
 
-    async run(message, args)
+    async run(message, {amount})
     {
         try
         {
-            message.channel.bulkDelete(args.amount + 1, true);
+            message.channel.bulkDelete(amount + 1, true);
         }
         catch(err)
         {
-            Console.log(err);
+            console.log(err);
         }
     }
 }

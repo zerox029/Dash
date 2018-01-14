@@ -21,25 +21,31 @@ module.exports = class DanbooruCommand extends Commando.Command
         });
     }
 
-    async run(message, args)
+    async run(message, {tags})
     {
         try
         {
-            const booruData = await booru.search('danbooru', args.tags.split(' '), {
+            const booruData = await booru.search('danbooru', tags.split(' '), {
                 'limit': 1,
                 'random': true
             }).then(booru.commonfy);
 
-            if(booruData)
-            {
-                return message.say("Here is what I found for " + args.tags + `: ${booruData[0].common.file_url}`);
-            }
-
-            return message.reply('Sorry! I could not find any image tagged with ' + args.tags);
+            var response = this.createResponse(tags, booruData);
+            return message.say(response);
         }
         catch(err)
         {
-            return message.reply('Sorry! I could not find any image tagged with ' + args.tags);
+            return message.reply('Sorry! I could not find any image tagged with ' + tags);
         }
+    }
+
+    createResponse(tags, booruData)
+    {
+        if(booruData)
+        {
+            return "Here is what I found for " + tags + `: ${booruData[0].common.file_url}`;
+        }
+
+        return 'Sorry! I could not find any image tagged with ' + tags;
     }
 }

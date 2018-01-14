@@ -36,8 +36,7 @@ module.exports = class NeedsMoreJpeg extends Commando.Command
             {
                 img.quality(1)
                    .write(newImagePath);
-            })
-            .catch(function (err) 
+            }).catch(function (err) 
             {
                 if(err.code == 'ENOENT')
                     err = "You didn't provide me with a valid image";

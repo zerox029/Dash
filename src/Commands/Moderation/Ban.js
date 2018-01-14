@@ -29,17 +29,17 @@ module.exports = class BanCommand extends Commando.Command
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
 	}
 
-    run(message, args)
+    run(message, {user, reason})
     {
         try
         {   
             var senderHighestRole = message.member.highestRole.position;
-            var toBanHighestRole = args.user.member.highestRole.position;
+            var toBanHighestRole = user.highestRole.position;
             
-            if(senderHighestRole > toBanHighestRole)
+            if(senderHighestRole > toBanHighestRole && user.bannable)
             {
-                args.user.ban(args.reason);
-                message.say(args.user.displayName + " has been banned for the following reason: " + args.reason);
+                user.ban(reason);
+                message.say(user.displayName + " has been banned for the following reason: " + reason);
             }
             else
             {

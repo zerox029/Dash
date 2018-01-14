@@ -20,11 +20,11 @@ module.exports = class AvatarCommand extends Commando.Command
         });
     }
 
-    run(message, args)
+    run(message, {user})
     {
         try
         {
-            message.say(args.user.avatarURL);
+            message.say(user.avatarURL);
         }
         catch(err)
         {

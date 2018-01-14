@@ -29,17 +29,17 @@ module.exports = class KickCommand extends Commando.Command
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('KICK_MEMBERS');
 	}
 
-    run(message, args)
+    run(message, {user, reason})
     {
         try
         {
             var senderHighestRole = message.member.highestRole.position;
-            var toBanHighestRole = args.user.member.highestRole.position;
+            var toBanHighestRole = user.highestRole.position;
             
-            if(senderHighestRole > toBanHighestRole)
+            if(senderHighestRole > toBanHighestRole && member.kickable)
             {
-                args.user.kick(args.reason);
-                message.say(args.user.displayName + " has been kicked for the following reason: " + args.reason);
+                user.kick(reason);
+                message.say(user.displayName + " has been kicked for the following reason: " + reason);
             } 
             else
             {
