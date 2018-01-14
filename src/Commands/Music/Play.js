@@ -240,11 +240,11 @@ module.exports = class PlaySongCommand extends Command {
 	play(guild, song) {
 		const queue = this.queue.get(guild.id);
 
-		// const vote = this.votes.get(guild.id);
-		// if (vote) {
-		// 	clearTimeout(vote);
-		// 	this.votes.delete(guild.id);
-		// }
+		const vote = this.votes.get(guild.id);
+		if (vote) {
+			clearTimeout(vote);
+			this.votes.delete(guild.id);
+		}
 
 		if (!song) {
 			queue.textChannel.send('We\'ve run out of songs! Better queue up some more tunes.');
@@ -258,7 +258,7 @@ module.exports = class PlaySongCommand extends Command {
 				color: 3447003,
 				author: {
 					name: song.username,
-					icon_url: song.avatar // eslint-disable-line camelcase
+					icon_url: song.avatar
 				},
 				description: `
 					${song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/) ? `${song}` : `[${song}](${`${song.url}`})`}
@@ -300,9 +300,9 @@ module.exports = class PlaySongCommand extends Command {
 		song.playing = true;
 	}
 
-	// get votes() {
-	// 	if (!this._votes) this._votes = this.client.registry.resolveCommand('music:skip').votes;
+	get votes() {
+		if (!this._votes) this._votes = this.client.registry.resolveCommand('music:skip').votes;
 
-	// 	return this._votes;
-	// }
+		return this._votes;
+	}
 };
