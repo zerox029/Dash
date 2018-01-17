@@ -56,7 +56,7 @@ module.exports = class QueueCommand extends Command
 			},
 			description: stripIndents`
 				__**Song queue, page ${paginated.page}**__
-				${paginated.items.map(song => `**-** ${!isNaN(song.id) ? `${song.name} (${song.lengthString})` : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`).join('\n')}
+				${paginated.items.map(song => `**${song.songNumber}: ** ${!isNaN(song.id) ? `${song.name} (${song.lengthString})` : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`).join('\n')}
 				${paginated.maxPage > 1 ? `\nUse ${message.usage()} to view a specific page.\n` : ''}
 				**Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
 				${oneLine`

@@ -264,10 +264,12 @@ module.exports = class PlaySongCommand extends Command
 					is too long. No songs longer than ${songMaxLength} minutes!
 				`;
 			}
+			
 			if (queue.songs.some(song => song.id === video.id)) 
 			{
 				return `👎 ${escapeMarkdown(video.title)} is already queued.`;
 			}
+
 			const songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
 			if (songMaxSongs > 0
 				&& queue.songs.reduce((prev, song) => prev + song.member.id === msg.author.id, 0)
@@ -277,7 +279,8 @@ module.exports = class PlaySongCommand extends Command
 		}
 
 		winston.info('Adding song to queue.', { song: video.id, guild: msg.guild.id });
-		const song = new Song(video, msg.member);
+		const songNumber = queue.songs.length + 1;
+		const song = new Song(video, msg.member, songNumber);
 		queue.songs.push(song);
 
 		return oneLine`

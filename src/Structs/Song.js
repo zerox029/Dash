@@ -2,7 +2,7 @@ const { Util } = require('discord.js'),
       { oneLineTrim } = require("common-tags");
 
 module.exports = class Song {
-    constructor(video, member)
+    constructor(video, member, songNumber)
     {
         this.name = Util.escapeMarkdown(video.title);
         this.id = video.id;
@@ -10,6 +10,7 @@ module.exports = class Song {
         this.member = member;
         this.dispatcher = null;
         this.playing = false;
+        this.songNumber = songNumber;
     }
 
     get url()
