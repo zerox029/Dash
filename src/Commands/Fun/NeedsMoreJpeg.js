@@ -28,6 +28,7 @@ module.exports = class NeedsMoreJpeg extends Commando.Command
     {
         try
         {
+            var statusMessage = await message.reply("Processing...");
             var attachments = (message.attachments).array();
             var imgLink = this.getImageLink(attachments, link)
             var newImagePath = this.getNewFilePath();
@@ -47,9 +48,12 @@ module.exports = class NeedsMoreJpeg extends Commando.Command
             message.say("I am done!", {
                 file: newImagePath
             });
+
+            statusMessage.delete();
         }
         catch(err)
         {
+            statusMessage.delete();
             message.reply(err);
         }
     }

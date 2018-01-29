@@ -7,7 +7,7 @@ const { Command } = require('discord.js-commando'),
 	  ytdl = require('ytdl-core');
 
 const { DEFAULT_VOLUME, YOUTUBE_API_KEY, MAX_LENGTH, MAX_SONGS, PASSES } = process.env;
-const Song = require('../../structs/Song');
+const Song = require('../../Structs/Song');
 
 module.exports = class PlaySongCommand extends Command 
 {
