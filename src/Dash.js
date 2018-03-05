@@ -126,6 +126,7 @@ class Dash {
 				['music', "Listen to some good ol' music"],
 				['games', 'Play games or see your stats!'],
 				['nsfw', 'More kinky commands | 18+'],
+				['time', 'Now you can be the server\'s time keeper'],
 				['moderation', 'Moderate your server'],
 			])
 			.registerDefaultGroups()
