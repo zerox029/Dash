@@ -339,7 +339,7 @@ module.exports = class PlaySongCommand extends Command
 				.on('error', err => {
 					streamErrored = true;
 					winston.error('Error occurred when streaming video:', err);
-					playing.then(msg => msg.edit(`❌ Couldn't play ${song}. What a drag!`));
+					playing.then(msg => msg.edit(`❌ Couldn't play ${song}.`));
 					queue.songs.shift();
 					this.play(guild, queue.songs[0]);
 				});
@@ -354,7 +354,7 @@ module.exports = class PlaySongCommand extends Command
 				winston.error('Error occurred in stream dispatcher:', err);
 				queue.textChannel.send(`An error occurred while playing the song: \`${err}\``);
 			});
-		queue.connection.player.opusEncoder.setPLP(0.01);
+		queue.connection.player.opusEncoder.setPLP(0.001);
 		dispatcher.setVolumeLogarithmic(queue.volume / 5);
 		song.dispatcher = dispatcher;
 		song.playing = true;

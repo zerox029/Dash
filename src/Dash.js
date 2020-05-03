@@ -1,14 +1,16 @@
 const Commando = require('discord.js-commando'),
 	  Discord = require('discord.js'),
 	  Path = require('path'),
-	  sqlite = require('sqlite');
+		sqlite = require('sqlite');
+
+
 
 class Dash {
 	constructor (token) {
 		this.bootTime = new Date();
 		this.token = token;
 		this.client = new Commando.Client({
-			'commandPrefix': '-',
+			'commandPrefix': '--',
 			'owner': '230702257480400896',
 			'selfbot': false,
 			'unknownCommandResponse': false
@@ -20,7 +22,7 @@ class Dash {
 		return () => {
 			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
 
-			this.client.user.setActivity("@Dash help", {
+			this.client.user.setActivity("with Ruby", {
 				type: "PLAYING"
 			});
 			this.isReady = true;
@@ -96,6 +98,10 @@ class Dash {
 				if (!msg.guild.available) {
 					return; // eslint-disable-line no-useless-return
 				}	
+				if(msg.content.toLowerCase().includes("rekt") && !msg.author.bot)
+					msg.channel.send("Yeah get rekt son!");
+				if(msg.content.includes("69") && !msg.author.bot)
+					msg.channel.send("nice.");
 			}
 		};
 	}

@@ -30,12 +30,13 @@ module.exports = class DiceRollCommand extends Commando.Command
     {
         try
         {
-            var message = createMessage(content, message.author);
-            recipient.send(message);
+            recipient.send(content);
+            message.delete();
         }
         catch(err)
         {
             message.reply("Sorry! I could not send the DM");
+            console.log(err);
         }
     }
 
