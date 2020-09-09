@@ -99,9 +99,12 @@ class Dash {
 					return; // eslint-disable-line no-useless-return
 				}	
 				if(msg.content.toLowerCase().includes("rekt") && !msg.author.bot)
-					msg.channel.send("Yeah get rekt son!");
+						msg.channel.send("Yeah, get rekt son!");
 				if(msg.content.includes("69") && !msg.author.bot)
-					msg.channel.send("nice.");
+					if(msg.content.toLowerCase().includes("434437407023169547") && !msg.author.bot)
+						msg.channel.send("nerd");
+					else
+						msg.channel.send("nice.");
 			}
 		};
 	}
@@ -134,6 +137,7 @@ class Dash {
 				['nsfw', 'More kinky commands | 18+'],
 				['time', 'Now you can be the server\'s time keeper'],
 				['moderation', 'Moderate your server'],
+				['quizzes', 'Quizzes on various topics']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()

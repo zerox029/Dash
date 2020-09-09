@@ -1,3 +1,5 @@
+kanjiPics/
+
 # File containing private API keys and tokens
 *.env
 
